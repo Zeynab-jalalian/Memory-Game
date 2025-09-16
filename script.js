@@ -48,7 +48,20 @@ const timeGenerator = () => {
 
 //for calculating moves
 const movesCounter = () => {
-   movesCount+= 1;
+  movesCount += 1;
   moves.innerHTML = `<span>Moves:</span>${movesCount}`;
 };
-movesCounter()
+
+//Pick random objects from the items array
+const generateRandom = (size = 4) => {
+  let tempArray = [...items];
+  let cardValues = [];
+  size = (size * size) / 2;
+  for (let i = 0; i < size; i++) {
+    const randomIndex = Math.floor(Math.random() * tempArray.length);
+    cardValues.push(tempArray[randomIndex]);
+
+    tempArray.splice(randomIndex,1);
+  }
+  return cardValues;
+};
