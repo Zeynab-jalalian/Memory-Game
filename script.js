@@ -65,3 +65,24 @@ const generateRandom = (size = 4) => {
   }
   return cardValues;
 };
+
+
+const matrixGenerator=(cardValues,size=4)=>{
+    gameContainer.innerHTML="";
+    cardValues=[...cardValues,...cardValues];
+    //shuffle
+    cardValues.sort(()=>Math.random() -0.5);
+    for(let i=0;i<size*size;i++){
+
+    }
+}
+
+//initialize
+const initializer=()=>{
+    result.innerText="";
+    winCount=0;
+    let cardValues=generateRandom();
+    console.log(cardValues);
+    matrixGenerator(cardValues);
+}
+initializer();
