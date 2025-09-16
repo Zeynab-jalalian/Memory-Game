@@ -30,7 +30,7 @@ const items = [
 let seconds = 0,
   minutes = 0;
 //Initial move and win
-let moveCount = 0,
+let movesCount = 0,
   winCount = 0;
 
 //timer
@@ -45,3 +45,10 @@ const timeGenerator = () => {
   let minutesValue = minutes < 10 ? `0${minutes}` : minutes;
   timeValue.innerHTML = `<span>Time:</span>${minutesValue}:${secondsValue}`;
 };
+
+//for calculating moves
+const movesCounter = () => {
+   movesCount+= 1;
+  moves.innerHTML = `<span>Moves:</span>${movesCount}`;
+};
+movesCounter()
