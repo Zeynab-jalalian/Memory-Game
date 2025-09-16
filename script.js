@@ -25,3 +25,23 @@ const items = [
   { name: "Girl2", image: "img/Girl2.jpg" },
   { name: "man2", image: "img/man2.jpg" },
 ];
+
+//Initial Time
+let seconds = 0,
+  minutes = 0;
+//Initial move and win
+let moveCount = 0,
+  winCount = 0;
+
+//timer
+const timeGenerator = () => {
+  seconds += 1;
+  if (seconds >= 60) {
+    minutes += 1;
+    seconds = 0;
+  }
+  //format timer before displaying
+  let secondsValue = seconds < 10 ? `0${seconds}` : seconds;
+  let minutesValue = minutes < 10 ? `0${minutes}` : minutes;
+  timeValue.innerHTML = `<span>Time:</span>${minutesValue}:${secondsValue}`;
+};
