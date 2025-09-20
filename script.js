@@ -85,6 +85,35 @@ const matrixGenerator=(cardValues,size=4)=>{
     }
     //Grid
     gameContainer.style.gridTemplateColumns=`repeat(${size},auto)`;
+    cards=document.querySelectorAll(".card-container");
+    cards.forEach((card)=>{
+      card.addEventListener("click",()=>{
+        if(!card.classList.contains("matched")){
+          card.classList.add("flipper");
+          if(!firstCard){
+            firstCard=card;
+            firstCardValue=card.getAttribute("data-card-value");
+          }
+        }else{
+          movesCounter();
+          secondCard=card;
+          let secondCardValue=card.getAttribute("data-card-value");
+          if(firstCardValue==secondCardValue){
+            firstCard.classList.add("matched");
+            secondCard.classList.add("matched");
+            firstCard=false;
+            winCount+=1;
+            if(winCount==Math.floor(cardValues.length / 2)){
+              result.innerHTML=`<h2>You Won</h2>
+              <h4>Moves:${movesCount}</h4>`;
+              stopGame();
+            }
+          }else{
+
+          }
+        }
+      })
+    })
 }
 
 //initialize
