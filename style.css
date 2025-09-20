@@ -8,7 +8,7 @@ body {
   background: skyblue;
 }
 .wrapper {
-  box-sizing: border-box;
+  box-sizing: content-box;
   width: 26.87em;
   padding: 2.5em 3em;
   background: #fff;
@@ -60,4 +60,7 @@ body {
 }
 .card-container.flipper.card-before {
   transform: rotateY(180deg);
+}
+.card-container.flipper.card-after{
+  transform: rotateY(0deg);
 }
