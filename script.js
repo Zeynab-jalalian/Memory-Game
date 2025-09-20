@@ -61,20 +61,19 @@ const generateRandom = (size = 4) => {
     const randomIndex = Math.floor(Math.random() * tempArray.length);
     cardValues.push(tempArray[randomIndex]);
 
-    tempArray.splice(randomIndex,1);
+    tempArray.splice(randomIndex, 1);
   }
   return cardValues;
 };
 
-
-const matrixGenerator=(cardValues,size=4)=>{
-    gameContainer.innerHTML="";
-    cardValues=[...cardValues,...cardValues];
-    //shuffle
-    cardValues.sort(()=>Math.random() -0.5);
-    for(let i=0;i<size*size;i++){
-     //before and after(image) card
-     gameContainer.innerHTML+=`
+const matrixGenerator = (cardValues, size = 4) => {
+  gameContainer.innerHTML = "";
+  cardValues = [...cardValues, ...cardValues];
+  //shuffle
+  cardValues.sort(() => Math.random() - 0.5);
+  for (let i = 0; i < size * size; i++) {
+    //before and after(image) card
+    gameContainer.innerHTML += `
      <div class="card-container" data-card-value="${cardValues[i].name}">
      <div class="card-before">?</div>
      <div class="card-after">
@@ -82,12 +81,57 @@ const matrixGenerator=(cardValues,size=4)=>{
      </div>
      </div>
      `;
-    }
-    //Grid
-    gameContainer.style.gridTemplateColumns=`repeat(${size},auto)`;
-    cards=document.querySelectorAll(".card-container");
-    cards.forEach((card)=>{
-      card.addEventListener("click",()=>{
+  }
+  //Grid
+  gameContainer.style.gridTemplateColumns = `repeat(${size},auto)`;
+  cards = document.querySelectorAll(".card-container");
+  cards.forEach((card) => {
+    card.addEventListener("click", () => {
+      if (!card.classList.contains("matched")) {
+        card.classList.add("flipper");
+        if (!firstCard) {
+          firstCard = card;
+          firstCardValue = card.getAttribute("data-card-value");
+        } else {
+          movesCounter();
+          secondCard = card;
+          let secondCardValue = card.getAttribute("data-card-value");
+          if (firstCardValue == secondCardValue) {
+            firstCard.classList.add("matched");
+            secondCard.classList.add("matched");
+            firstCard = false;
+            winCount += 1;
+            if (winCount == Math.floor(cardValues.length / 2)) {
+              result.innerHTML = `<h2>You Won</h2>
+              <h4>Moves:${movesCount}</h4>`;
+              stopGame();
+            } else {
+              let [tempFirst, tempSecond] = [firstCard, secondCard];
+              firstCard = false;
+              secondCard = false;
+              let delay=setTimeout(() => {
+                tempFirst.classList.remove("flipper");
+                tempSecond.classList.remove("flipper");
+              }, 900);
+            }
+          }
+        }
+      }
+    });
+  });
+};
+
+//initialize
+const initializer = () => {
+  result.innerText = "";
+  winCount = 0;
+  let cardValues = generateRandom();
+  console.log(cardValues);
+  matrixGenerator(cardValues);
+};
+initializer();
+/* 
+   card.addEventListener("click",()=>{
         if(!card.classList.contains("matched")){
           card.classList.add("flipper");
           if(!firstCard){
@@ -109,19 +153,8 @@ const matrixGenerator=(cardValues,size=4)=>{
               stopGame();
             }
           }else{
-
+            
           }
         }
       })
-    })
-}
-
-//initialize
-const initializer=()=>{
-    result.innerText="";
-    winCount=0;
-    let cardValues=generateRandom();
-    console.log(cardValues);
-    matrixGenerator(cardValues);
-}
-initializer();
+*/
