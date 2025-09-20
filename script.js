@@ -105,22 +105,41 @@ const matrixGenerator = (cardValues, size = 4) => {
               result.innerHTML = `<h2>You Won</h2>
               <h4>Moves:${movesCount}</h4>`;
               stopGame();
-            } else {
+            } 
+          }
+          else {
               let [tempFirst, tempSecond] = [firstCard, secondCard];
               firstCard = false;
               secondCard = false;
-              let delay=setTimeout(() => {
+              let delay = setTimeout(() => {
                 tempFirst.classList.remove("flipper");
                 tempSecond.classList.remove("flipper");
               }, 900);
             }
-          }
         }
       }
     });
   });
 };
-
+//start game
+startButton.addEventListener("click", () => {
+  movesCount = 0;
+  time = 0;
+  controls.classList.add("hide");
+  stopButton.classList.remove("hide");
+  startButton.classList.add("hide");
+  //start timer
+  interval = setInterval(timeGenerator, 1000);
+  moves.innerHTML = `<span>Moves:</span>${movesCount}`;
+  initializer();
+});
+//stop game
+stopButton.addEventListener("click",(stopGame=()=>{
+  controls.classList.remove("hide");
+  stopButton.classList.add("hide");
+  startButton.classList.remove("hide");
+  clearInterval(interval);
+}))
 //initialize
 const initializer = () => {
   result.innerText = "";
@@ -130,31 +149,3 @@ const initializer = () => {
   matrixGenerator(cardValues);
 };
 initializer();
-/* 
-   card.addEventListener("click",()=>{
-        if(!card.classList.contains("matched")){
-          card.classList.add("flipper");
-          if(!firstCard){
-            firstCard=card;
-            firstCardValue=card.getAttribute("data-card-value");
-          }
-        }else{
-          movesCounter();
-          secondCard=card;
-          let secondCardValue=card.getAttribute("data-card-value");
-          if(firstCardValue==secondCardValue){
-            firstCard.classList.add("matched");
-            secondCard.classList.add("matched");
-            firstCard=false;
-            winCount+=1;
-            if(winCount==Math.floor(cardValues.length / 2)){
-              result.innerHTML=`<h2>You Won</h2>
-              <h4>Moves:${movesCount}</h4>`;
-              stopGame();
-            }
-          }else{
-            
-          }
-        }
-      })
-*/
